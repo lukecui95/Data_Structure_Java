@@ -11,11 +11,11 @@ public class IntList {
     /**
      * First element of list.
      */
-    public int first;
+    private int first;
     /**
      * Remaining elements of list.
      */
-    public IntList rest;
+    private IntList rest;
 
     /**
      * A List with first FIRST0 and rest REST0.
@@ -81,15 +81,14 @@ public class IntList {
      */
 
     public static IntList dcatenate(IntList A, IntList B) {
-        //TODO:  fill in method
-        if (A==null){
+        if (A == null) {
             return B;
         }
-        IntList P=A;
-        while(A.rest!=null){
+        IntList P = A;
+        while (A.rest != null) {
             A = A.rest;
         }
-        A.rest= B;
+        A.rest = B;
 
         return P;
     }
@@ -99,23 +98,43 @@ public class IntList {
      * * elements of B.  May NOT modify items of A.  Use 'new'.
      */
     public static IntList catenate(IntList A, IntList B) {
-        //TODO:  fill in method
-        IntList P =  new IntList(A.first,null);
+        IntList P =  new IntList(A.first, null);
         IntList L =  P;
-
         A = A.rest;
-        while(A!=null){
-            P.rest = new IntList(A.first,null);
+        while (A != null) {
+            P.rest = new IntList(A.first, null);
             A = A.rest;
             P = P.rest;
         }
 
-        while(B!=null){
-            P.rest = new IntList(B.first,null);
+        while (B != null) {
+            P.rest = new IntList(B.first, null);
             B = B.rest;
             P = P.rest;
         }
         return L;
+    }
+
+    public static IntList reverse(IntList A) {
+        if (A == null) {
+            return null;
+        }
+
+        IntList N = A.rest;
+        A.rest = null;
+
+        while (N != null) {
+            IntList tmp = N.rest;
+            N.rest = A;
+            A = N;
+            N = tmp;
+        }
+
+        return A;
+
+
+
+
     }
 
 

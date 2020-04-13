@@ -1,3 +1,7 @@
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
 public class HorribleSteve {
     public static void main(String [] args) throws Exception {
         int i = 0;
@@ -9,4 +13,14 @@ public class HorribleSteve {
         }
         System.out.println("i is " + i);
     }
+
+    @Test
+    public void testFlik(){
+        int a = 129;
+        int b = 129;
+        boolean ans = a == b;
+        assertTrue(ans);
+
+    }
+
 }
