@@ -50,7 +50,7 @@ public class ArrayDeque <T>{
 
         items[nextFirst] = item;
         size += 1;
-        nextFirst = (nextFirst - 1) % items.length;
+        nextFirst = (nextFirst - 1 + items.length) % items.length;
 
     }
 
@@ -106,7 +106,7 @@ public class ArrayDeque <T>{
             return null;
         }
 
-        nextLast = (nextLast-1) % items.length;
+        nextLast = (nextLast-1 + items.length) % items.length;
         T res = items[nextLast];
         items[nextLast] = null;
 
