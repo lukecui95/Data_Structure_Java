@@ -31,7 +31,7 @@ public class TestArrayDequeGold {
             ErrorMsg += "removeLast()\n";
         }
 
-        return a == b;
+        assertEquals(ErrorMsg,a,b);
 
     }
 
@@ -52,8 +52,8 @@ public class TestArrayDequeGold {
             RandomAdd(stu1,sol1,num1,random1);
             RandomAdd(stu1,sol1,num2,random2);
             
-            boolean r1 = RandomRemove(stu1,sol1,random3);
-            assertTrue(ErrorMsg,r1);
+            RandomRemove(stu1,sol1,random3);
+
 
 
         }
