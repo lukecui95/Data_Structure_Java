@@ -18,7 +18,7 @@ public class TestArrayDequeGold {
 
     }
 
-    public boolean RandomRemove(StudentArrayDeque<Integer> stu, ArrayDequeSolution<Integer> sol, double random) {
+    public void RandomRemove(StudentArrayDeque<Integer> stu, ArrayDequeSolution<Integer> sol, double random) {
         Integer a;
         Integer b;
         if (random <= 0.5){
