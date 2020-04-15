@@ -18,20 +18,22 @@ public class TestArrayDequeGold {
 
     }
 
-    public void RandomRemove(StudentArrayDeque<Integer> stu, ArrayDequeSolution<Integer> sol, double random) {
-        Integer a;
-        Integer b;
+    public Integer[] RandomRemove(StudentArrayDeque<Integer> stu, ArrayDequeSolution<Integer> sol, double random) {
+        Integer[] a = new Integer[2];
+
+
         if (random <= 0.5){
-            a = stu.removeFirst();
-            b = sol.removeFirst();
+            a[0] = stu.removeFirst();
+            a[1] = sol.removeFirst();
             ErrorMsg += "removeFirst()\n";
         } else{
-            a = stu.removeLast();
-            b = sol.removeLast();
+            a[0] = stu.removeLast();
+            a[1] = sol.removeLast();
             ErrorMsg += "removeLast()\n";
         }
 
-        assertEquals(ErrorMsg,a,b);
+
+        return a;
 
     }
 
@@ -52,7 +54,8 @@ public class TestArrayDequeGold {
             RandomAdd(stu1,sol1,num1,random1);
             RandomAdd(stu1,sol1,num2,random2);
             
-            RandomRemove(stu1,sol1,random3);
+            Integer[] res = RandomRemove(stu1,sol1,random3);
+            assertEquals(ErrorMsg,res[0],res[1]);
 
 
 
