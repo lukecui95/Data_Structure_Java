@@ -13,12 +13,8 @@ import java.util.Map;
 
 import static huglife.HugLifeUtils.randomEntry;
 
-/**
- * An implementation of a motile pacifist photosynthesizer.
- *
- * @author Josh Hug
- */
-public class Plip extends Creature {
+
+public class Clorus extends Creature {
 
     /**
      * red color.
@@ -36,18 +32,18 @@ public class Plip extends Creature {
     /**
      * creates plip with energy equal to E.
      */
-    public Plip(double e) {
-        super("plip");
-        r = 99;
+    public Clorus(double e) {
+        super("clorus");
+        r = 34;
         g = 0;
-        b = 76;
+        b = 231;
         energy = e;
     }
 
     /**
      * creates a plip with energy equal to 1.
      */
-    public Plip() {
+    public Clorus() {
         this(1);
     }
 
@@ -59,9 +55,8 @@ public class Plip extends Creature {
      * linearly in between these two extremes. It's not absolutely vital
      * that you get this exactly correct.
      */
+    @Override
     public Color color() {
-
-        g = (int) (96 * energy + 63);
         return color(r, g, b);
     }
 
@@ -70,8 +65,9 @@ public class Plip extends Creature {
     /**
      * Do nothing with C, Plips are pacifists.
      */
+    @Override
     public void attack(Creature c) {
-        // do nothing.
+        energy += c.energy();
     }
 
     /**
@@ -79,9 +75,12 @@ public class Plip extends Creature {
      * to avoid the magic number warning, you'll need to make a
      * private static final variable. This is not required for this lab.
      */
+    @Override
     public void move() {
-        energy -= 0.15;
-        if (energy < 0) energy = 0;
+        energy -= 0.03;
+        if (energy < 0) {
+            energy = 0;
+        }
         // TODO
     }
 
@@ -89,10 +88,11 @@ public class Plip extends Creature {
     /**
      * Plips gain 0.2 energy when staying due to photosynthesis.
      */
+    @Override
     public void stay() {
-        energy += 0.2;
-        if (energy > 2) {
-            energy = 2;
+        energy -= 0.01;
+        if (energy < 0) {
+            energy = 0;
         }
     }
 
@@ -101,8 +101,9 @@ public class Plip extends Creature {
      * lost to the process. Now that's efficiency! Returns a baby
      * Plip.
      */
-    public Plip replicate() {
-        Plip OffSpring = new Plip(energy * 0.5);
+    @Override
+    public Clorus replicate() {
+        Clorus OffSpring = new Clorus(energy * 0.5);
         energy = energy * 0.5;
         return OffSpring;
     }
@@ -123,7 +124,8 @@ public class Plip extends Creature {
     public Action chooseAction(Map<Direction, Occupant> neighbors) {
         // Rule 1
         Deque<Direction> emptyNeighbors = new ArrayDeque<>();
-        boolean anyClorus = false;
+        Deque<Direction> plipNeighbors = new ArrayDeque<>();
+
         double random = StdRandom.uniform();
 
 
@@ -134,8 +136,8 @@ public class Plip extends Creature {
             Occupant occupant = neighbors.get(key);
             if (occupant.name().equals("empty")){
                 emptyNeighbors.add(key);
-            } else if (occupant.name().equals("clorus")){
-                anyClorus = true;
+            } else if (occupant.name().equals("plip")){
+                plipNeighbors.add(key);
             }
         }
 
@@ -143,16 +145,14 @@ public class Plip extends Creature {
         if ( emptyNeighbors.size() == 0) { // FIXME
             // TODO
             return new Action(Action.ActionType.STAY);
+        }else if (plipNeighbors.size() > 0) {
+            return new Action(Action.ActionType.ATTACK, randomEntry(plipNeighbors));
         }else if (energy >= 1.0) {
-            // Rule 2
-            // HINT: randomEntry(emptyNeighbors)
-            return new Action(Action.ActionType.REPLICATE, randomEntry(emptyNeighbors));
-        }else if (anyClorus && random<0.5) {
             // Rule 3
-            return new Action(Action.ActionType.MOVE, randomEntry(emptyNeighbors));
+            return new Action(Action.ActionType.REPLICATE, randomEntry(emptyNeighbors));
         }else{
             // Rule 4
-            return new Action(Action.ActionType.STAY);
+            return new Action(Action.ActionType.MOVE, randomEntry(emptyNeighbors));
         }
 
     }
